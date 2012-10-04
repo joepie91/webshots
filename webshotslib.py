@@ -16,7 +16,18 @@ def get_user_listings(url):
 		
 	return matches
 
-def get_users(url):
+def get_users(url, allow_quotes):
 	contents = urllib.urlopen(url).read()
-	matches = re.findall('http:\/\/community\.webshots\.com\/user\/([^/\'"]+)', contents)
-	return [value for value in matches if value != "my"]
+	
+	if allow_quotes == True:
+		matches = re.findall('http:\/\/community\.webshots\.com\/user\/([^/]+)', contents)
+	else:
+		matches = re.findall('http:\/\/community\.webshots\.com\/user\/([^/\'"]+)', contents)
+	
+	count = contents.count("http://community.webshots.com/user/")
+	
+	return [value for value in matches if value != "my"], count
+
+def search_query(query):
+	query = urllib.quote(query.ljust(3, "%") + "%")
+	return get_users("http://www.webshots.com/explore/member?action=userSearch&username=%s" % query, True)
