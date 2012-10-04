@@ -24,7 +24,8 @@ for category in webshotslib.get_category_listings("http://community.webshots.com
 print ""
 
 for listing_page in to_parse:
-	for user in webshotslib.get_users(listing_page):
+	results, count = webshotslib.get_users(listing_page, False)
+	for user in results:
 		if user not in users:
 			users.append(user)
 			users_count += 1
