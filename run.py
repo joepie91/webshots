@@ -36,3 +36,7 @@ for listing_page in to_parse:
 				userfile.close()
 				users_last_save = users_count
 	time.sleep(0.5)
+
+userfile = open("users.txt", "w")
+userfile.write("\n".join(users))
+userfile.close()
